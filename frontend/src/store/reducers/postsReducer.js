@@ -5,7 +5,7 @@ import {
     GET_POST_BY_ID_REQUEST, GET_POST_BY_ID_SUCCESS,
     GET_POSTS_FAILURE,
     GET_POSTS_REQUEST,
-    GET_POSTS_SUCCESS
+    GET_POSTS_SUCCESS, REMOVE_POST_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS
 } from "../actions/postsActions";
 
 const initialState = {
@@ -50,6 +50,12 @@ const postsReducer = (state = initialState, action) => {
         case ADD_POST_SUCCESS:
             return {...state, loading: false, error: false};
         case ADD_POST_FAILURE:
+            return {...state, loading: false, error: action.payload};
+        case REMOVE_POST_REQUEST:
+            return {...state, loading: true};
+        case REMOVE_POST_SUCCESS:
+            return {...state, loading: false};
+        case REMOVE_POST_FAILURE:
             return {...state, loading: false, error: action.payload};
         default:
             return state;

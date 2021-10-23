@@ -12,6 +12,10 @@ export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
 export const getPostsRequest = () => ({type: GET_POSTS_REQUEST});
 export const getPostsSuccess = data => ({type: GET_POSTS_SUCCESS, payload: data});
 export const getPostsFailure = error => ({type: GET_POSTS_FAILURE, payload: error});
@@ -23,6 +27,10 @@ export const getPostByIdFailure = error => ({type: GET_POST_BY_ID_FAILURE, paylo
 export const addPostRequest = () => ({type: ADD_POST_REQUEST});
 export const addPostSuccess = () => ({type: ADD_POST_SUCCESS});
 export const addPostFailure = error => ({type: ADD_POST_FAILURE, payload: error});
+
+export const removePostRequest = () => ({type: REMOVE_POST_REQUEST});
+export const removePostSuccess = () => ({type: REMOVE_POST_SUCCESS});
+export const removePostFailure = error => ({type: REMOVE_POST_FAILURE, payload: error});
 
 export const getPosts = () => {
     return async dispatch => {
@@ -57,6 +65,18 @@ export const addPost = (data) => {
         } catch (error) {
             dispatch(addPostFailure(error.response.data.error));
             throw new Error(error.response.data.error);
+        }
+    };
+};
+
+export const removePost = id => {
+    return async dispatch => {
+        try {
+            dispatch(removePostRequest());
+            await axiosApi.delete(`/news/${id}`);
+            dispatch(removePostSuccess());
+        } catch (error) {
+            dispatch(removePostFailure(error));
         }
     };
 };

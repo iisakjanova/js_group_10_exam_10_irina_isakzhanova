@@ -57,6 +57,7 @@ const Post = (props) => {
                             <Button
                                 variant="contained"
                                 color="default"
+                                onClick={() => props.onRemove(post.id)}
                             >
                                 Delete
                             </Button>
