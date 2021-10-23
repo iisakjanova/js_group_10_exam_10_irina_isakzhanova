@@ -13,7 +13,7 @@ const FullPost = () => {
 
     useEffect(() => {
         dispatch(getPostById(id));
-    }, []);
+    }, [dispatch, id]);
 
     const posts = useSelector(state => state.posts.posts);
 

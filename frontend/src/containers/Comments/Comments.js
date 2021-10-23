@@ -23,7 +23,7 @@ const Comments = ({post_id}) => {
 
     useEffect(() => {
         dispatch(getComments(post_id));
-    }, [dispatch]);
+    }, [dispatch, post_id]);
 
     const handleRemove = async (id) => {
         await dispatch(removeComment(id));
