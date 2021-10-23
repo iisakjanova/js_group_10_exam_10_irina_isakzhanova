@@ -3,6 +3,7 @@ import {Grid, Typography} from "@material-ui/core";
 import {useSelector, useDispatch} from "react-redux";
 import {useRouteMatch} from "react-router-dom";
 import {getPostById} from "../../store/actions/postsActions";
+import Comments from "../Comments/Comments";
 
 const FullPost = () => {
     const dispatch = useDispatch();
@@ -16,10 +17,10 @@ const FullPost = () => {
     const posts = useSelector(state => state.posts.posts);
 
     const post = posts.find(p => p.id === Number(id));
+
     if (!post) {
-        return null
+        return null;
     }
-    console.log({ post })
 
     return (
         <div>
@@ -34,6 +35,7 @@ const FullPost = () => {
                     <Typography variant="body1">{post.content}</Typography>
                 </Grid>
             </Grid>
+            <Comments post_id={post.id}  />
         </div>
     );
 };
