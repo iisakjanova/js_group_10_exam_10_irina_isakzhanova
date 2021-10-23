@@ -15,6 +15,30 @@ module.exports = {
     getConnection: () => connection,
 
 // Posts
+    async getPosts() {
+        try {
+            const [data] = await this.getConnection().query(
+                'SELECT ??, ??, ??, ?? FROM ??',
+                ['id', 'title', 'image', 'datetime', posts]
+            );
+
+            return data;
+        } catch (e) {
+            console.log(e.message);
+        }
+    },
+    async getPostById(id) {
+        try {
+            const [data] = await this.getConnection().query(
+                `SELECT * FROM ?? WHERE id = ?`,
+                [posts, id]
+            );
+
+            return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
+    },
     async addPost(post) {
         post.datetime = dayjs().format('YYYY-MM-DDTHH:mm:ss');
 
@@ -26,6 +50,18 @@ module.exports = {
             );
 
             return data[0];
+        } catch (e) {
+            console.log(e.message);
+        }
+    },
+    async deletePost(id) {
+        try {
+            const [data] = await this.getConnection().query(
+                'DELETE FROM ?? WHERE id = ?',
+                [posts, id]
+            );
+
+            return data;
         } catch (e) {
             console.log(e.message);
         }

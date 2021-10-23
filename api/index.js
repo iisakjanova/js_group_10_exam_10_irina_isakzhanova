@@ -12,7 +12,7 @@ const port = 8000;
 app.use(express.json());
 app.use(cors());
 
-app.use('/posts', posts);
+app.use('/news', posts);
 app.use('/comments', comments);
 
 app.use(express.static('public'));
