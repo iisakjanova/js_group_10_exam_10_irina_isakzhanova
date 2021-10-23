@@ -1,4 +1,6 @@
 import {
+    ADD_POST_FAILURE,
+    ADD_POST_REQUEST, ADD_POST_SUCCESS,
     GET_POST_BY_ID_FAILURE,
     GET_POST_BY_ID_REQUEST, GET_POST_BY_ID_SUCCESS,
     GET_POSTS_FAILURE,
@@ -42,6 +44,12 @@ const postsReducer = (state = initialState, action) => {
                 posts: updatedPosts,
             };
         case GET_POST_BY_ID_FAILURE:
+            return {...state, loading: false, error: action.payload};
+        case ADD_POST_REQUEST:
+            return {...state, loading: true};
+        case ADD_POST_SUCCESS:
+            return {...state, loading: false, error: false};
+        case ADD_POST_FAILURE:
             return {...state, loading: false, error: action.payload};
         default:
             return state;
