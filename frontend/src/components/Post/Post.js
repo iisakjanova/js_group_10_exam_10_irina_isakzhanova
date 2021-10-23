@@ -50,7 +50,7 @@ const Post = (props) => {
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle2">
-                                <Link component="button">Read full post</Link>
+                                <Link component="button" onClick={() => props.onGetFullPost(post.id)}>Read full post</Link>
                             </Typography>
                         </Grid>
                         <Grid item>
