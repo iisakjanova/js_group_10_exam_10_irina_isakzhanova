@@ -15,6 +15,8 @@ app.use(cors());
 app.use('/posts', posts);
 app.use('/comments', comments);
 
+app.use(express.static('public'));
+
 mysqlDb.connect().catch(e => console.log(e));
 
 app.listen(port, () => {
