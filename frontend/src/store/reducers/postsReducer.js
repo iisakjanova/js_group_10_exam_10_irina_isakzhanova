@@ -23,13 +23,18 @@ const postsReducer = (state = initialState, action) => {
         case GET_POST_BY_ID_REQUEST:
             return {...state, loading: true};
         case GET_POST_BY_ID_SUCCESS:
+            let postFound = false
             const updatedPosts = state.posts.map(post => {
-                if (post.id === action.payload.post.id) {
+                if (post.id === Number(action.payload.post.id)) {
+                    postFound = true
                     return action.payload.post
                 }
-
                 return post;
             });
+
+            if (!postFound) {
+                updatedPosts.push(action.payload.post)
+            }
 
             return {
                 ...state,
