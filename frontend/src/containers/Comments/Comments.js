@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {getComments} from "../../store/actions/commentsActions";
+import {getComments, removeComment} from "../../store/actions/commentsActions";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Grid, makeStyles, Paper, Typography} from "@material-ui/core";
 
@@ -23,7 +23,12 @@ const Comments = ({post_id}) => {
 
     useEffect(() => {
         dispatch(getComments(post_id));
-    }, []);
+    }, [dispatch]);
+
+    const handleRemove = async (id) => {
+        await dispatch(removeComment(id));
+        dispatch(getComments(post_id));
+    };
 
     return (
         <div>
@@ -44,6 +49,7 @@ const Comments = ({post_id}) => {
                                             <Button
                                                 variant="contained"
                                                 color="default"
+                                                onClick={() => handleRemove(comment.id)}
                                             >
                                                 Delete
                                             </Button>

@@ -16,6 +16,14 @@ export const addCommentRequest = () => ({type: ADD_COMMENT_REQUEST});
 export const addCommentSuccess = () => ({type: ADD_COMMENT_SUCCESS});
 export const addCommentFailure = error => ({type: ADD_COMMENT_FAILURE, payload: error});
 
+export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
+export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
+export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
+
+export const removeCommentRequest = () => ({type: REMOVE_COMMENT_REQUEST});
+export const removeCommentSuccess = () => ({type: REMOVE_COMMENT_SUCCESS});
+export const removeCommentFailure = error => ({type: REMOVE_COMMENT_FAILURE, payload: error});
+
 export const getComments = (id) => {
     return async dispatch => {
         try {
@@ -41,3 +49,14 @@ export const addComment = (data) => {
     };
 };
 
+export const removeComment = id => {
+    return async dispatch => {
+        try {
+            dispatch(removeCommentRequest());
+            await axiosApi.delete(`/comments/${id}`);
+            dispatch(removeCommentSuccess());
+        } catch (error) {
+            dispatch(removeCommentFailure(error));
+        }
+    };
+};
