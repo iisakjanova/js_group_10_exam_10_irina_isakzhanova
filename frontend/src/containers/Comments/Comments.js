@@ -30,7 +30,7 @@ const Comments = ({post_id}) => {
             <Grid container direction="column" spacing={3} className={classes.root}>
                 {comments.map(comment => {
                     return (
-                        <Grid item>
+                        <Grid item key={comment.id}>
                             <Paper className={classes.paper}>
                                 <Grid container direction="column">
                                     <Grid item>

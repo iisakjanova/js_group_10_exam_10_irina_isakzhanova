@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {useRouteMatch} from "react-router-dom";
 import {getPostById} from "../../store/actions/postsActions";
 import Comments from "../Comments/Comments";
+import AddComment from "../Comments/AddComment";
 
 const FullPost = () => {
     const dispatch = useDispatch();
@@ -35,7 +36,8 @@ const FullPost = () => {
                     <Typography variant="body1">{post.content}</Typography>
                 </Grid>
             </Grid>
-            <Comments post_id={post.id}  />
+            <Comments post_id={post.id} />
+            <AddComment post_id={post.id} />
         </div>
     );
 };

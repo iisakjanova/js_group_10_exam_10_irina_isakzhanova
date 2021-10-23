@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {Grid, makeStyles, Paper, Typography, TextField, Button} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 
-import FileInput from "../../components/UI/FileInput/FileInput";
-import {addPost} from "../../store/actions/postsActions";
+import {addComment, getComments} from "../../store/actions/commentsActions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,48 +15,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialState = {
-    title: '',
+    author: '',
     content: '',
-    image: null,
 };
-const AddPost = () => {
+const AddComment = ({post_id}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const [post, setPost] = useState(initialState);
-    const [fileInputKey, setFileInputKey] = useState(null);
+    const [comment, setComment] = useState(initialState);
 
     const handleInputChange = e => {
         const {name, value} = e.target;
 
-        setPost(prev => ({
+        setComment(prev => ({
             ...prev,
             [name]: value,
         }));
     };
 
-    const handleFileChange = e => {
-        const name = e.target.name;
-        const file = e.target.files[0];
-
-        setPost(prev => ({
-            ...prev,
-            [name]: file,
-        }));
-    };
-
     const handleFormSubmit = async e => {
         e.preventDefault();
-        const formData = new FormData();
-
-        Object.keys(post).forEach(key => {
-            formData.append(key, post[key]);
-        });
-
         try {
-            await dispatch(addPost(formData));
-            setPost(initialState);
-            setFileInputKey(Math.random());
+            await dispatch(addComment({
+                ...comment,
+                post_id,
+            }));
+            dispatch(getComments(post_id));
+            setComment(initialState);
         } catch (e) {
             console.log(e.message);
         }
@@ -66,17 +50,16 @@ const AddPost = () => {
     return (
         <Grid item>
             <Paper className={classes.root}>
-                <Typography variant="h6" className={classes.title}>Add new post</Typography>
+                <Typography variant="h6" className={classes.title}>Add new comment</Typography>
                 <form onSubmit={handleFormSubmit}>
                     <Grid container direction="column" spacing={2}>
                         <Grid item>
                             <TextField
-                                required
-                                name="title"
-                                label="Title"
+                                name="author"
+                                label="Name"
                                 variant="outlined"
                                 fullWidth
-                                value={post.title}
+                                value={comment.author}
                                 onChange={handleInputChange}
                             />
                         </Grid>
@@ -84,21 +67,13 @@ const AddPost = () => {
                             <TextField
                                 required
                                 name="content"
-                                label="Content"
+                                label="Comment"
                                 variant="outlined"
                                 multiline
                                 rows={5}
                                 fullWidth
-                                value={post.content}
+                                value={comment.content}
                                 onChange={handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs>
-                            <FileInput
-                                key={fileInputKey}
-                                label="Image"
-                                name="image"
-                                onChange={handleFileChange}
                             />
                         </Grid>
                         <Grid item>
@@ -117,4 +92,4 @@ const AddPost = () => {
     );
 };
 
-export default AddPost;
+export default AddComment;
